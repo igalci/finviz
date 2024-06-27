@@ -1,5 +1,6 @@
 import asyncio
 import os
+import time
 from typing import Callable, Dict, List
 
 import aiohttp
@@ -70,6 +71,9 @@ def sequential_data_scrape(
             data.append(scrape_func(response, *args, **kwargs))
         except Exception as exc:
             raise exc
+
+        #scraping too quickly results in blank data returned
+        time.sleep(1)
 
     return data
 
